@@ -1,0 +1,35 @@
+store_id: ST1008
+store_name: Purplle, Brigade Road, Bangalore
+timezone: Asia/Kolkata
+clips_dir: data/clips
+outputs_dir: outputs
+
+# yolo11n is the smallest YOLO11 model, pretrained on COCO, fast enough for a laptop CPU.
+# confidence is the lowest detection score passed on to the tracker.
+detection:
+  model: yolo11n.pt
+  confidence: 0.25
+
+# clock_start is the time burned into frame 0 of each clip (store-local IST).
+cameras:
+  - id: entry
+    clip: CAM 3 - entry.mp4
+    role: entry
+    clock_start: "2026-04-10 20:10:00"
+    clock_note: The burned-in clock is blurred on this camera. Estimated from the other three, which start between 20:09:48 and 20:10:27, so expect about 30 s of error.
+
+  - id: zone_1
+    clip: CAM 1 - zone.mp4
+    role: zone
+    clock_start: "2026-04-10 20:10:27"
+
+  - id: zone_2
+    clip: CAM 2 - zone.mp4
+    role: zone
+    clock_start: "2026-04-10 20:10:02"
+
+  - id: billing
+    clip: CAM 5 - billing.mp4
+    role: billing
+    clock_start: "2026-04-10 20:09:48"
+
