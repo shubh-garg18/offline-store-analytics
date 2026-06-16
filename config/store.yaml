@@ -4,7 +4,8 @@ timezone: Asia/Kolkata
 clips_dir: data/clips
 outputs_dir: outputs
 
-# yolo11n is the smallest YOLO11 model, pretrained on COCO, fast enough for a laptop CPU.
+# yolo11n is the smallest YOLO11 model, pretrained on COCO, fast enough for a laptop CPU. yolo11s was
+# tried too (outputs/evaluation.md): twice the CPU time for no measurable gain.
 # confidence is the lowest detection score passed on to the tracker.
 detection:
   model: yolo11n.pt
