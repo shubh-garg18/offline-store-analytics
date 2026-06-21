@@ -39,6 +39,23 @@ class EventSettings:
 
 
 @dataclass
+class FinetuneSettings:
+    student_model: str
+    teacher_model: str
+    teacher_confidence: float
+    teacher_candidate_confidence: float
+    teacher_imgsz: int
+    frames_per_camera: int
+    min_gap_seconds: float
+    val_fraction: float
+    split_gap_seconds: float
+    epochs: int
+    imgsz: int
+    batch: int
+    patience: int
+
+
+@dataclass
 class StoreConfig:
     store_id: str
     store_name: str
@@ -48,6 +65,7 @@ class StoreConfig:
     outputs_dir: Path
     cameras: list[Camera]
     events: EventSettings
+    finetune: FinetuneSettings | None = None
 
     def camera(self, camera_id: str) -> Camera:
         for camera in self.cameras:
@@ -94,4 +112,5 @@ def load_config(path: Path = CONFIG_PATH) -> StoreConfig:
         outputs_dir=Path(raw["outputs_dir"]),
         cameras=[load_camera(entry, clips_dir) for entry in raw["cameras"]],
         events=EventSettings(**raw["events"]),
+        finetune=FinetuneSettings(**raw["finetune"]) if raw.get("finetune") else None,
     )

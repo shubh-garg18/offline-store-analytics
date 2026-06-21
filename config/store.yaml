@@ -58,3 +58,21 @@ events:
   debounce_seconds: 0.33
   match_tolerance_seconds: 2.0
 
+# Fine-tuning the small detector on frames from this store (src/finetune.py).
+finetune:
+  student_model: yolo11n.pt
+  teacher_model: yolo11x.pt
+  teacher_confidence: 0.3
+  # Weaker teacher boxes are kept as candidates the review can accept, instead of drawing boxes by hand.
+  teacher_candidate_confidence: 0.1
+  teacher_imgsz: 960
+  # Every teacher box is reviewed by eye, and frames closer than about 1 s apart add little.
+  frames_per_camera: 120
+  min_gap_seconds: 0.5
+  val_fraction: 0.3
+  # Frames this close to the train/val boundary are dropped, so no val frame has a near copy in train.
+  split_gap_seconds: 2.0
+  epochs: 60
+  imgsz: 640
+  batch: 16
+  patience: 15
