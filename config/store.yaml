@@ -4,12 +4,18 @@ timezone: Asia/Kolkata
 clips_dir: data/clips
 outputs_dir: outputs
 
-# yolo11n is the smallest YOLO11 model, pretrained on COCO, fast enough for a laptop CPU. yolo11s was
-# tried too (outputs/evaluation.md): twice the CPU time for no measurable gain.
-# confidence is the lowest detection score passed on to the tracker.
+# model: yolo11n fine-tuned on 328 frames from this store (outputs/finetune.md). Same size and
+# CPU speed as the pretrained yolo11n, but on held-out frames recall rose from 0.69 to 0.87 and mAP50-95
+# from 0.59 to 0.77, and on the held-out tail of zone_2 the occupancy error fell (summer display 0.56 to
+# 0.28). It is not in the repo: build it with `python -m src.kaggle_job` or `python -m src.finetune`, or
+# set model back to yolo11n.pt. yolo11s was rejected earlier (outputs/evaluation.md): twice the CPU time
+# for no measurable gain.
+# confidence: what model.track receives. ByteTrack's second pass matches boxes scored 0.10 to 0.25 to
+# existing tracks (new tracks still need 0.25), so 0.25 here switched that pass off. 0.10 gave fewer
+# flicker tracks and fewer censored zone visits with unchanged occupancy error (outputs/finetune.md, section 1).
 detection:
-  model: yolo11n.pt
-  confidence: 0.25
+  model: outputs/models/store_yolo11n.pt
+  confidence: 0.10
 
 # clock_start is the time burned into frame 0 of each clip (store-local IST).
 cameras:
