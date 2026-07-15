@@ -59,6 +59,13 @@ cameras:
     queue_area: [[0.0, 0.40], [0.18, 0.40], [0.12, 0.75], [0.10, 1.0], [0.0, 1.0]]
     staff_area: [[0.40, 0.05], [0.60, 0.05], [0.60, 1.0], [0.36, 1.0], [0.38, 0.45]]
 
+# The same store's bills for the same day. Only order_id, order_date, order_time, store_id and total_amount are
+# read: the file also holds customer names and phone numbers. A visitor counts as converted if they joined the
+# billing queue within conversion_window_minutes before a bill.
+pos:
+  csv: data/pos/brigade_road_2026-04-10.csv
+  conversion_window_minutes: 5
+
 events:
   min_track_seconds: 1.0
   debounce_seconds: 0.33

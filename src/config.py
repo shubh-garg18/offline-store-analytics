@@ -39,6 +39,12 @@ class EventSettings:
 
 
 @dataclass
+class PosSettings:
+    csv: Path
+    conversion_window_minutes: int
+
+
+@dataclass
 class FinetuneSettings:
     student_model: str
     teacher_model: str
@@ -65,6 +71,7 @@ class StoreConfig:
     outputs_dir: Path
     cameras: list[Camera]
     events: EventSettings
+    pos: PosSettings | None = None
     finetune: FinetuneSettings | None = None
 
     def camera(self, camera_id: str) -> Camera:
@@ -112,5 +119,6 @@ def load_config(path: Path = CONFIG_PATH) -> StoreConfig:
         outputs_dir=Path(raw["outputs_dir"]),
         cameras=[load_camera(entry, clips_dir) for entry in raw["cameras"]],
         events=EventSettings(**raw["events"]),
+        pos=PosSettings(Path(raw["pos"]["csv"]), raw["pos"]["conversion_window_minutes"]) if raw.get("pos") else None,
         finetune=FinetuneSettings(**raw["finetune"]) if raw.get("finetune") else None,
     )
